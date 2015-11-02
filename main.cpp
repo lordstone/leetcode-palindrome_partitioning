@@ -26,8 +26,8 @@ public:
     vector<vector<string>> myPartition(string s){
         vector<vector<string>> arr;
         if(s.length() == 0) return arr;
-        int ptr = 0;
-        while(ptr < s.length()){
+        int ptr = s.length() - 1;
+        while(ptr >= 0){
             int left = ptr;
             int right = ptr;
             if(s[ptr] == '#'){
@@ -37,17 +37,14 @@ public:
             while(left >= 0 && right < s.length()){
                 if(s[left] != '#' && s[left] == s[right]){
                     vector<vector<string>> tmparr = myPartition(s.substr(right + 1));
-                    arr.insert(arr.end(), tmparr.begin(), tmparr.end());
-                    for(vector<string> elem : arr){
+                    for(vector<string> elem : tmparr){
                         elem.insert(elem.begin(), removePonds(s.substr(left, right-left)));
                     }
-                }else{
-                    return arr;
                 }
                 left -= 2;
                 right += 2;
             }//end while
-            ptr++;
+            ptr--;
         }//end while
         return arr;
     }
